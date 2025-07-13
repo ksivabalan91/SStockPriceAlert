@@ -33,5 +33,6 @@ def check_moving_average(ticker):
         msg = f"📈 {ticker} is near its 200-week MA: {current_price:.2f} vs MA {ma200:.2f} ({diff_pct:.2f}%)"
         send_telegram_message(msg)
 
-for ticker in tickers:
-    check_moving_average(ticker)
+# for ticker in tickers:
+    # check_moving_average(ticker)
+send_telegram_message('TEST')
