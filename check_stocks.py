@@ -1,10 +1,11 @@
 import yfinance as yf
 import requests
 import os
+import datetime
 
 
-tickers = ['AAPL']
-threshold_pct = 10
+tickers = ['PLTR','NVDA','VOO','AMD','AAPL','AMZN','GOOG','MSFT','BTC-USD','ETH-USD']
+threshold_pct = 5
 chat_id = os.getenv('TELEGRAM_CHAT_ID')
 bot_token = os.getenv('TELEGRAM_BOT_TOKEN')
 
@@ -33,6 +34,6 @@ def check_moving_average(ticker):
         msg = f"📈 {ticker} is near its 200-week MA: {current_price:.2f} vs MA {ma200:.2f} ({diff_pct:.2f}%)"
         send_telegram_message(msg)
 
-# for ticker in tickers:
-    # check_moving_average(ticker)
-send_telegram_message('TEST')
+send_telegram_message(f'Running job now, @ {datetime.datetime.now()}')
+for ticker in tickers:
+    check_moving_average(ticker)
