@@ -2,7 +2,7 @@ name: Stock Alert Bot
 
 on:
   schedule:
-    - cron: '*/15 * * * *'  # Runs every Monday at 1 PM UTC
+    - cron: '45 15 * * *'  # Runs everyday at 3:45 PM 
   workflow_dispatch:
 
 jobs:
