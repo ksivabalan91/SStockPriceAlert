@@ -7,7 +7,7 @@ import Stock as Stock
 
 # Step 1: Identify peaks and troughs
 def get_support_resistance_levels(df, distance=5):
-    print(f"Identifying support/resistance levels...")
+    # print(f"Identifying support/resistance levels...")
     prices = df['Close'].values.flatten()
     peaks, _ = find_peaks(prices, distance=distance)
     troughs, _ = find_peaks(-prices, distance=distance)
@@ -16,7 +16,7 @@ def get_support_resistance_levels(df, distance=5):
 
 # Step 2: Cluster levels to group nearby prices using DBSCAN
 def cluster_levels(levels, eps=1.5):
-    print(f"Clustering support/resistance levels...")
+    # print(f"Clustering support/resistance levels...")
     levels = np.array(levels).reshape(-1, 1)
     clustering = DBSCAN(eps=eps, min_samples=2).fit(levels)
     clustered_levels = []
@@ -29,7 +29,7 @@ def cluster_levels(levels, eps=1.5):
 
 # Step 3: Combine clustering and percentage-based merging
 def cluster_levels_combined(levels, percent=1.0):
-    print(f"Combining clustered levels with percentage threshold...")
+    # print(f"Combining clustered levels with percentage threshold...")
     levels = sorted(levels)
     clustered = []
 
