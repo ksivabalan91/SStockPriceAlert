@@ -28,8 +28,4 @@ for ticker in tickers:
         # Plot stock data with moving average and support/resistance levels
         plot_with_levels(stock, buy_signal)
         # Send Telegram message if conditions are met
-
-
-
-
-
+        
