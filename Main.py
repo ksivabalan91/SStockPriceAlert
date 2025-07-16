@@ -25,9 +25,9 @@ for ticker in tickers:
     
     
     if buy_signal is not None:        
-    # Plot stock data with moving average and support/resistance levels
+        # Plot stock data with moving average and support/resistance levels
         plot_with_levels(stock, buy_signal)
-    # Send Telegram message if conditions are met
+        # Send Telegram message if conditions are met
 
 
 

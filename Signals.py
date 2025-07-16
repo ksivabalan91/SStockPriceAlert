@@ -2,26 +2,33 @@ from Stock import Stock
 import matplotlib.pyplot as plt
 
 def check_buy_signal(stock: Stock, supports: list[float], moving_average: dict):
-    current_price = stock.current_price
-    signals = {
+    current_price = [stock.current_high, stock.current_low, stock.current_open, stock.current_close]
+    signal = {
+        'ticker': stock.ticker,
         'score': 0,
-        'support_level': [],
-        'moving_average': {},
+        'current_price': current_price[-1]
     }
 
     for support in supports:
-        if abs(current_price - support) / support * 100 <= 5.0:
-            signals['score'] += 1
-            signals['support_level'].append(support)
+        for price in current_price:
+            if abs(price - support) / support * 100 <= 5:
+                signal['score'] += 1                
+                if 'support_level' not in signal:
+                    signal['support_level'] = []
+                signal['support_level'].append(support)
+                break
     for ma_key, (ma_value, weight) in moving_average.items():
-        if abs(current_price - ma_value) / ma_value * 100 <= 5.0:
-            signals['score'] += weight
-            signals['moving_average'][ma_key] = ma_value
-
-    if signals['score'] >= 0.5:
-        return signals
-    
+        for price in current_price:
+            if abs(price - ma_value) / ma_value * 100 <= 5:
+                signal['score'] += weight
+                if 'moving_average' not in signal:
+                    signal['moving_average'] = {}
+                signal['moving_average'][ma_key] = ma_value
+                break
+    if signal['score'] >= 1.5:
+        return signal    
     return None
 
 def plot_with_levels(stock: Stock, buy_signal):
+    print(f"Plotting stock data for {stock.ticker} with buy signal...")
     pass

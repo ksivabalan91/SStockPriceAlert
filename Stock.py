@@ -8,7 +8,10 @@ class Stock:
         self._daily_hist = None    # Use underscores for "private" attributes
         self._weekly_hist = None
         self._monthly_hist = None
-        self.current_price = None  # Will be set when daily_hist is loaded
+        self.current_close = None  # Will be set when daily_hist is loaded
+        self.current_open = None
+        self.current_low = None
+        self.current_high = None
         self.supports = []
 
     def _fetch_history(self, interval):
@@ -28,7 +31,10 @@ class Stock:
         if self._daily_hist is None:
             self._daily_hist = self._fetch_history('1d')
             if not self._daily_hist.empty:
-                self.current_price = self._daily_hist['Close'].iloc[-1]
+                self.current_close = self._daily_hist['Close'].iloc[-1]
+                self.current_open = self._daily_hist['Open'].iloc[-1]
+                self.current_low = self._daily_hist['Low'].iloc[-1]
+                self.current_high = self._daily_hist['High'].iloc[-1]
         return self._daily_hist
 
     @property
