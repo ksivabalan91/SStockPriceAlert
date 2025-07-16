@@ -2,7 +2,7 @@ name: Stock Alert Bot
 
 on:
   schedule:
-    - cron: '45 15 * * *'  # Runs everyday at 3:45 PM 
+    - cron: '45 13 * * *'  # Runs everyday at 3:45 PM 
   workflow_dispatch:
 
 jobs:
@@ -27,4 +27,4 @@ jobs:
         env:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
-        run: python check_stocks.py
+        run: python Main.py
