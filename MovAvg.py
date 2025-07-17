@@ -13,8 +13,8 @@ def get_moving_averages(stock: Stock) -> dict[str, float]:
 
     # Define intervals and their corresponding dataframes and windows
     intervals_config = {
-        'daily': {'df': stock.daily_hist, 'windows': [150,200],'weight': 1},
-        'weekly': {'df': stock.weekly_hist, 'windows': [100, 150, 200], 'weight': 1.5},
+        'daily': {'df': stock.daily_hist, 'windows': [150, 200],'weight': 1},
+        'weekly': {'df': stock.weekly_hist, 'windows': [50, 100, 150, 200], 'weight': 1.5},
         'monthly': {'df': stock.monthly_hist, 'windows': [50],'weight': 1.5}
     }
 

@@ -46,10 +46,31 @@ def generate_captions(buy_signal: dict) -> str:
     
     return '\n'.join(captions)
 
+def get_mpf_supports(buy_signal: dict, df_masked) -> list:
+    mpf_supports = []
+    if 'support_level' in buy_signal:
+        for level in buy_signal['support_level']:
+            mpf_supports.append(mpf.make_addplot([level]*len(df_masked), color='gray', width=1, linestyle='--'))
+    return mpf_supports
+
+def get_mpf_moving_averages(buy_signal: dict, stock: Stock, df_masked) -> list:
+    mpf_moving_averages = []
+    if 'moving_average' in buy_signal:
+        for ma_key, _ in buy_signal['moving_average'].items():
+            period, window_str, _ = ma_key.split('_')
+            interval = get_interval(period)
+            window = int(window_str)
+            sma = stock.stock.history(period='10y', interval=interval).rolling(window=window).mean()['Close']
+            interpolated_series = get_interpolated_MA(sma, df_masked)        
+            color = get_color(int(window_str))
+            width,linestyle = get_width_linestyle(period)      
+            mpf_moving_averages.append(mpf.make_addplot(interpolated_series, color=color, width=width, linestyle=linestyle))
+    return mpf_moving_averages
+
 def plot_with_levels(stock: Stock, buy_signal: dict):
-    # Download historical data
     df = stock.daily_hist
 
+    # Filter data for plotting window
     date_mask = pd.Timestamp.today(tz='America/New_York') - pd.DateOffset(years=1)
     df_masked = df[df.index >= date_mask]
 
@@ -66,25 +87,10 @@ def plot_with_levels(stock: Stock, buy_signal: dict):
     df[required_cols] = df[required_cols].astype(float)
     df.index.name = 'Date'
 
-    mpf_supports = []
+    # Support lines and moving averages
+    mpf_supports = get_mpf_supports(buy_signal, df_masked)    
+    mpf_moving_averages = get_mpf_moving_averages(buy_signal, stock, df_masked)
 
-    # Support lines
-    if 'support_level' in buy_signal:
-        for level in buy_signal['support_level']:
-            mpf_supports.append(mpf.make_addplot([level]*len(df_masked), color='gray', width=1, linestyle='--'))
-
-    mpf_moving_averages = []
-
-    if 'moving_average' in buy_signal:
-        for ma_key, _ in buy_signal['moving_average'].items():
-            period, window_str, _ = ma_key.split('_')
-            interval = get_interval(period)
-            window = int(window_str)
-            sma = stock.stock.history(period='10y', interval=interval).rolling(window=window).mean()['Close']
-            interpolated_series = get_interpolated_MA(sma, df_masked)        
-            color = get_color(int(window_str))
-            width,linestyle = get_width_linestyle(period)      
-            mpf_moving_averages.append(mpf.make_addplot(interpolated_series, color=color, width=width, linestyle=linestyle))
     # Plot and return figure and axes
     fig, axes = mpf.plot(
         df_masked,
