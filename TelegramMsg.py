@@ -23,7 +23,9 @@ def send_telegram_image(image_path: str, caption: str = ''):
         }
         response = requests.post(url, files=files, data=data)
 
-    print(f"Telegram response: {response.status_code}")
+    if response.status_code != 200:
+        send_telegram_message(f"Failed to send image: {response.status_code} - {response.text}")
+        return response.json()
     return response.json()
 
 def save_and_send_plot(fig, filename='chart.png', caption='📈 Stock chart'):

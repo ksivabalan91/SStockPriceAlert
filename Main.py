@@ -1,13 +1,12 @@
-from TelegramMsg import save_and_send_plot
 from Stock import Stock
 from Supports import get_supports
-from MovAvg import get_moving_averages
 from Signals import check_buy_signal
+from MovAvg import get_moving_averages
+from TelegramMsg import save_and_send_plot
 from Plot import plot_with_levels, generate_captions
 
 
 tickers = ['PLTR','NVDA','VOO','AMD','AAPL','AMZN','GOOG','MSFT','BTC-USD','ETH-USD']
-# tickers = ['NVDA']
 
 for ticker in tickers:
     # Initialize Stock object

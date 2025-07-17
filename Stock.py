@@ -51,13 +51,3 @@ class Stock:
 
     def __repr__(self):
         return f"Stock(ticker='{self.ticker}', current_price={self.current_price})"
-
-# class Stock:
-#     def __init__(self, ticker):
-#         self.ticker = ticker
-#         self.stock = yf.Ticker(ticker)
-#         self.daily_hist = self.stock.history(period='10y', interval='1d')
-#         self.weekly_hist = self.stock.history(period='10y', interval='1wk')
-#         self.monthly_hist = self.stock.history(period='10y', interval='1mo')
-#         self.current_price = self.daily_hist['Close'].iloc[-1] if not self.daily_hist.empty else None
-#         self.supports = []
