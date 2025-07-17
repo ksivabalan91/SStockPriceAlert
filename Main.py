@@ -3,7 +3,8 @@ from TelegramMsg import send_telegram_message
 from Stock import Stock
 from Supports import get_supports
 from MovAvg import get_moving_averages
-from Signals import check_buy_signal, plot_with_levels
+from Signals import check_buy_signal
+from Plot import plot_with_levels
 
 
 tickers = ['PLTR','NVDA','VOO','AMD','AAPL','AMZN','GOOG','MSFT','BTC-USD','ETH-USD']
@@ -28,4 +29,3 @@ for ticker in tickers:
         # Plot stock data with moving average and support/resistance levels
         plot_with_levels(stock, buy_signal)
         # Send Telegram message if conditions are met
-        
