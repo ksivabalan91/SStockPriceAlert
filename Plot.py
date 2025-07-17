@@ -98,6 +98,7 @@ def plot_with_levels(stock: Stock, buy_signal: dict):
         style='yahoo',
         title=f"{buy_signal['ticker']} Candlestick Chart",
         ylabel='Price ($)',
+        volume=True,
         addplot=mpf_supports + mpf_moving_averages,
         figratio=(21, 9),
         figscale=1.2,
