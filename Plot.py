@@ -31,6 +31,21 @@ def get_interpolated_MA(sma : pd.DataFrame, source_df : pd.DataFrame) -> pd.Data
     interpolated_series = expanded_series.interpolate(method='time')
     return interpolated_series.ffill().bfill()
 
+def generate_captions(buy_signal: dict) -> str:
+    captions = []
+    captions.append(f"📈 PRICE ALERT: ${buy_signal['ticker']}")
+    captions.append(f"Current Price: ${buy_signal['current_price']:.2f}")
+    current_price = buy_signal['current_price']
+    if 'support_level' in buy_signal:
+        supports = ', '.join(f"{level:.2f} ({abs(level-current_price)/level*100:.2f}%)" for level in buy_signal['support_level'])
+        captions.append(f"Support levels: ${supports}")
+    
+    if 'moving_average' in buy_signal:
+        moving_averages = ', '.join(f"{key}: ${value:.2f}({abs(value-current_price)/value*100:.2f}%)" for key, value in buy_signal['moving_average'].items())
+        captions.append(f"Moving Average: {moving_averages}")
+    
+    return '\n'.join(captions)
+
 def plot_with_levels(stock: Stock, buy_signal: dict):
     # Download historical data
     df = stock.daily_hist
@@ -114,4 +129,5 @@ def plot_with_levels(stock: Stock, buy_signal: dict):
     # Add legend to the top-left of the chart
     ax.legend(handles=legend_handles, loc='upper left', fontsize=8, frameon=False)
 
-    plt.show()
+    # plt.show()
+    return fig

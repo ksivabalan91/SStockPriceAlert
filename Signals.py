@@ -10,7 +10,7 @@ def check_buy_signal(stock: Stock, supports: list[float], moving_average: dict)-
 
     for support in supports:
         for price in current_price:
-            if abs(price - support) / support * 100 <= 20:
+            if abs(price - support) / support * 100 <= 3:
                 signal['score'] += 1                
                 if 'support_level' not in signal:
                     signal['support_level'] = []
@@ -18,7 +18,7 @@ def check_buy_signal(stock: Stock, supports: list[float], moving_average: dict)-
                 break
     for ma_key, (ma_value, weight) in moving_average.items():
         for price in current_price:
-            if abs(price - ma_value) / ma_value * 100 <= 20:
+            if abs(price - ma_value) / ma_value * 100 <= 3:
                 signal['score'] += weight
                 if 'moving_average' not in signal:
                     signal['moving_average'] = {}

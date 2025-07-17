@@ -1,10 +1,9 @@
-import datetime
-from TelegramMsg import send_telegram_message
+from TelegramMsg import save_and_send_plot
 from Stock import Stock
 from Supports import get_supports
 from MovAvg import get_moving_averages
 from Signals import check_buy_signal
-from Plot import plot_with_levels
+from Plot import plot_with_levels, generate_captions
 
 
 tickers = ['PLTR','NVDA','VOO','AMD','AAPL','AMZN','GOOG','MSFT','BTC-USD','ETH-USD']
@@ -27,5 +26,7 @@ for ticker in tickers:
     
     if buy_signal is not None:        
         # Plot stock data with moving average and support/resistance levels
-        plot_with_levels(stock, buy_signal)
+        fig = plot_with_levels(stock, buy_signal)
+        captions = generate_captions(buy_signal)
         # Send Telegram message if conditions are met
+        save_and_send_plot(fig, f"image_cache\\{ticker}.png", captions)
