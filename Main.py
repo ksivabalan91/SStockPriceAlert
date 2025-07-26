@@ -6,7 +6,7 @@ from TelegramMsg import save_and_send_plot
 from Plot import plot_with_levels, generate_captions
 
 # Todo: Transfer tickers to json file and use telegram bot to update it
-tickers = ['PLTR','NVDA','VOO','AMD','AAPL','AMZN','GOOG','MSFT','BTC-USD','ETH-USD']
+tickers = ['PLTR','NVDA','QQQ', 'VOO','AMD','AAPL','AMZN','GOOG','MSFT','BTC-USD','ETH-USD']
 
 for ticker in tickers:
     # Initialize Stock object
